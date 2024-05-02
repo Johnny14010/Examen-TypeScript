@@ -1,0 +1,106 @@
+// 1. Modelado de Datos con TypeScript
+
+interface Starship {
+  hullHealth: number;
+  cargoHoldCapacity: number;
+  travelSpeed: number;
+}
+
+enum ResourceType {
+  Minerals = "Minerals",
+  Water = "Water",
+  Fuel = "Fuel",
+}
+
+class CelestialBody {
+  resourceType: ResourceType;
+  threatLevel: number;
+
+  constructor(resourceType: ResourceType, threatLevel: number) {
+    this.resourceType = resourceType;
+    this.threatLevel = threatLevel;
+  }
+}
+
+class GalacticEvent {
+  description: string;
+  impact: (ship: Starship) => void;
+
+  constructor(description: string, impact: (ship: Starship) => void) {
+    this.description = description;
+    this.impact = impact;
+  }
+}
+
+// 2. Funcionalidades del Simulador
+
+function navigateToSector(direction: "north" | "south" | "east" | "west"): void {
+  console.log(`Navigating to ${direction} sector...`);
+}
+
+function mineResource<T extends ResourceType>(resourceType: T): void {
+  console.log(`Mining ${resourceType}...`);
+}
+
+function handleGalacticEvent(event: GalacticEvent): void {
+  console.log(`Handling event: ${event.description}`);
+}
+
+// 3. Logística y Navegación
+
+function getPlayerInput(prompt: string): string | number {
+  const input: string = window.prompt(prompt) || '';
+  const parsedInput = parseFloat(input);
+  if (!isNaN(parsedInput)) {
+    return parsedInput;
+  }
+  return input;
+}
+
+function simulateJourney(): void {
+  console.log('Simulating journey...');
+}
+
+// 4. Organización del Código con Módulos y Espacios de Nombres
+
+export namespace Navigation {
+  export function navigateToSector(direction: "north" | "south" | "east" | "west"): void {
+    console.log(`Navigating to ${direction} sector...`);
+  }
+}
+
+export namespace EventManagement {
+  export function handleGalacticEvent(event: GalacticEvent): void {
+    console.log(`Handling event: ${event.description}`);
+  }
+}
+
+export namespace UI {
+  export function getPlayerInput(prompt: string): string | number {
+    const input: string = window.prompt(prompt) || '';
+    const parsedInput = parseFloat(input);
+    if (!isNaN(parsedInput)) {
+      return parsedInput;
+    }
+    return input;
+  }
+}
+
+// Ejemplo de uso del simulador
+
+const myStarship: Starship = {
+  hullHealth: 100,
+  cargoHoldCapacity: 50,
+  travelSpeed: 10,
+};
+
+const myCelestialBody: CelestialBody = new CelestialBody(ResourceType.Minerals, 5);
+const myGalacticEvent: GalacticEvent = new GalacticEvent('Meteor Storm', (ship) => {
+  ship.hullHealth -= 20;
+});
+
+navigateToSector('north');
+mineResource(ResourceType.Fuel);
+handleGalacticEvent(myGalacticEvent);
+
+simulateJourney();
